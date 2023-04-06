@@ -109,6 +109,7 @@ async function mountView(route) {
         await loadJSView(fixedPath);
     }
     else if (Autoroutes.parsers) {
+        console.log('todoraf', path, fixedPath);
         let hasParser = false;
         for (const customParser of Autoroutes.parsers) {
             if (!path.match(customParser.pattern)) continue;
@@ -211,6 +212,7 @@ async function loadJSView(viewRelativeUrl) {
 async function loadViewFromFile(viewRelativeUrl, customParser) {
     // Fetches the view's HTML file and returns its content
     const fileUrl = new URL(Autoroutes.appPath.replace(window.location.origin, '') + viewRelativeUrl.replace(/^\.+\//, '/'), Autoroutes.appPath).href;
+    console.log('todoraf', fileUrl);
     const response = await fetch(fileUrl);
     const viewString = await response.text();
     if (customParser)  {
