@@ -12,4 +12,4 @@ const parsers = [
     },
 ];
 
-Autoroutes.start({routes, baseFolder: '/src/views', parsers});
+Autoroutes.start({routes, baseFolder: './src/views', parsers});
