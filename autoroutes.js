@@ -77,7 +77,7 @@ function addListeners() {
     });
 
     // Listen to manual navigation ie. mouse navigation shortcut
-    window.addEventListener('popstate', (event) => Autoroutes.mountView(window.location.pathname));
+    window.addEventListener('popstate', (event) => Autoroutes.mountView(window.location.toString().replace(Autoroutes.appPath, '')));
 }
 
 async function mountView(route) {
@@ -132,10 +132,11 @@ async function mountView(route) {
 
 function navigate(route, data) {
     const fixedPath = route.charAt(0) === '/' ? route : '/' + route; // Allows to omit leading "/"
-    NAVIGATION_EVENT.path = Autoroutes.appPath.toString().replace(window.location.origin, '') + fixedPath;
+    const fullPath =  Autoroutes.appPath.toString().replace(window.location.origin, '') + fixedPath;
+    NAVIGATION_EVENT.path = fixedPath;
 
     const fixedData = data !== undefined && data !== null ? data : Autoroutes.draftData;
-    history.pushState(fixedData, '', fixedPath);
+    history.pushState(fixedData, '', fullPath);
 
     // Ensure no data might be accidentally added in next navigation
     setData(null);
