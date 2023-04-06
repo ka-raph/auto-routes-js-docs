@@ -4,7 +4,7 @@
 
 **AutoroutesJs** supports JS and HTML files for templating out-of-the-box, but it is also easily configurable to use other file formats, such as Markdown (which is powering these docs).
 
-- <router-link to="/Intallation">Installation</router-link>
+- <router-link to="/Installation">Installation</router-link>
 - <router-link to="/getstarted">Getting Started</router-link>
 - <router-link to="/configuration">Configuration</router-link>
 - <router-link to="/api">API</router-link>
