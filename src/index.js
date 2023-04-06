@@ -1,6 +1,6 @@
 import routes from './routes.js';
 
-export const BASE_URL = window.location.origin;
+export const BASE_URL = window.location.origin + 'auto-routes-js-docs';
 export const BASE_URL_IDENTIFIER = '$$BASE_URL';
 const updateBaseUrlInTemplate = templateStr => templateStr.replaceAll('$$BASE_URL', BASE_URL);
 const parsers = [
@@ -12,4 +12,4 @@ const parsers = [
     },
 ];
 
-Autoroutes.start({routes, baseFolder: './src/views', parsers});
+Autoroutes.start({routes, appPath: BASE_URL, baseFolder: './src/views', parsers});
