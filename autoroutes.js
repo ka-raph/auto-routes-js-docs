@@ -88,6 +88,7 @@ async function mountView(route) {
     if (!validatePath(route)) return;
 
     // Get view path from route
+    console.log('todoraf', route ,route === '/' || route === '' ? 'default' : route)
     const fixedRoute = route === '/' || route === '' ? 'default' : route;
 
     // Get the path of the file to load and update router's values
