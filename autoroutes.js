@@ -57,7 +57,7 @@ function start(config) { // TODO validate config
         if (Autoroutes.debug) console.error(`${Autoroutes.name}: Default route is not a valid string.`);
         return;
     }
-    Autoroutes.mountView(window.location.replace(Autoroutes.appPath, ''));
+    Autoroutes.mountView(window.location.toString().replace(Autoroutes.appPath, ''));
 }
 
 function addListeners() {
