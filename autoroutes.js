@@ -45,8 +45,12 @@ const NAVIGATION_EVENT = new Event(EVENT_NAME, {
 // ==                                                                                  ==
 // ======================================================================================
 function start(config) { // TODO validate config
+    // Add config to Autoroutes
     if (config.baseFolder !== undefined) config.baseFolder.charAt(0) === '/' ? config.baseFolder : '/' + config.baseFolder;
     Object.assign(Autoroutes, config);
+
+    // Add sticky path (base url path of the app after the origin)
+    Object.defineProperty(Autoroutes, 'originPath', {value: Autoroutes.appPath.toString().replace(window.location.origin, ''), writable: false}); // .toString() used to avoid mutating the pointer
     window.Autoroutes = Autoroutes;
     Autoroutes.addListeners();
     if (!Autoroutes.routes.default) {
@@ -57,7 +61,8 @@ function start(config) { // TODO validate config
         if (Autoroutes.debug) console.error(`${Autoroutes.name}: Default route is not a valid string.`);
         return;
     }
-    Autoroutes.mountView(window.location.toString().replace(Autoroutes.appPath, ''));
+    // Mount view from current path when the page loads for the first time
+    Autoroutes.mountView(getRouteFromCurrentUrl());
 }
 
 function addListeners() {
@@ -77,7 +82,7 @@ function addListeners() {
     });
 
     // Listen to manual navigation ie. mouse navigation shortcut
-    window.addEventListener('popstate', (event) => Autoroutes.mountView(window.location.toString().replace(Autoroutes.appPath, '')));
+    window.addEventListener('popstate', (event) => Autoroutes.mountView(getRouteFromCurrentUrl()));
 }
 
 async function mountView(route) {
@@ -88,13 +93,12 @@ async function mountView(route) {
     if (!validatePath(route)) return;
 
     // Get view path from route
-    console.log('todoraf', route ,route === '/' || route === '' ? 'default' : route)
     const fixedRoute = route === '/' || route === '' ? 'default' : route;
 
     // Get the path of the file to load and update router's values
     Autoroutes.route = '';
     Autoroutes.wildcards = [];
-    let path = fixedRoute !== 'default' ? getFilePath(fixedRoute.split('/')) : Autoroutes.routes.default; // TODORAF check for that
+    const path = fixedRoute !== 'default' ? getFilePath(fixedRoute.split('/')) : Autoroutes.routes.default;
     Autoroutes.route = Autoroutes.route.replace('/', ''); // First dash shouldn't be shown
     if (!path) {
         if (Autoroutes.debug) console.error(`${Autoroutes.name}: The error above was triggered because of path.`, route);
@@ -110,7 +114,6 @@ async function mountView(route) {
         await loadJSView(fixedPath);
     }
     else if (Autoroutes.parsers) {
-        console.log('todoraf', path, fixedPath);
         let hasParser = false;
         for (const customParser of Autoroutes.parsers) {
             if (!path.match(customParser.pattern)) continue;
@@ -132,7 +135,7 @@ async function mountView(route) {
 
 function navigate(route, data) {
     const fixedPath = route.charAt(0) === '/' ? route : '/' + route; // Allows to omit leading "/"
-    const fullPath =  Autoroutes.appPath.toString().replace(window.location.origin, '') + fixedPath;
+    const fullPath =  Autoroutes.originPath + fixedPath;
     NAVIGATION_EVENT.path = fixedPath;
 
     const fixedData = data !== undefined && data !== null ? data : Autoroutes.draftData;
@@ -213,8 +216,7 @@ async function loadJSView(viewRelativeUrl) {
 
 async function loadViewFromFile(viewRelativeUrl, customParser) {
     // Fetches the view's HTML file and returns its content
-    const fileUrl = new URL(Autoroutes.appPath.replace(window.location.origin, '') + viewRelativeUrl.replace(/^\.+\//, '/'), Autoroutes.appPath).href;
-    console.log('todoraf', fileUrl);
+    const fileUrl = new URL(Autoroutes.originPath + viewRelativeUrl.replace(/^\.+\//, '/'), Autoroutes.appPath).href;
     const response = await fetch(fileUrl);
     const viewString = await response.text();
     if (customParser)  {
@@ -273,4 +275,9 @@ function validateCustomParser(fixedPath, customParser) {
     if (typeof customParser.parse !== 'function') parserErrors.push(`${Autoroutes.name}: Custom parser is not a valid function.`);
     if (parserErrors.length > 0 && Autoroutes.debug) console.error(`${Autoroutes.name}: One or more errors happened when using the provided parser for the file ${fixedPath}.`, ...parserErrors);
     return parserErrors.length === 0;
+}
+
+function getRouteFromCurrentUrl() {
+    // .toString() is used to avoid mutating the location (it returns a pointer), which would reload the whole page
+    return window.location.toString().replace(Autoroutes.appPath, '');
 }
