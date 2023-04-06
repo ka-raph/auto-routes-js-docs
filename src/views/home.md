@@ -4,7 +4,7 @@
 
 **AutoroutesJs** supports JS and HTML files for templating out-of-the-box, but it is also easily configurable to use other file formats, such as Markdown (which is powering these docs).
 
-- [Intallation]($$BASE8URL/installation)
-- [Getting Started]($$BASE8URL/getstarted)
-- [Configuration]($$BASE8URL/configuration)
-- [API]($$BASE8URL/api)
+- [Intallation]($$BASE_URL/installation)
+- [Getting Started]($$BASE_URL/getstarted)
+- [Configuration]($$BASE_URL/configuration)
+- [API]($$BASE_URL/api)
