@@ -1,0 +1,8 @@
+router-link {
+    color: rgb(0, 110, 255);
+    font-weight: bold;
+    cursor: pointer;
+}
+router-link:hover {
+    color: rgb(15, 53, 102);
+}

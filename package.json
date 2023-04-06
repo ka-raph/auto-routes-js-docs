@@ -1,0 +1,12 @@
+{
+  "name": "auto-routes-js-docs",
+  "version": "1.0.0",
+  "description": "Documentation for AutoroutesJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ka-raph",
+  "license": "ISC",
+  "dependencies": {}
+}
