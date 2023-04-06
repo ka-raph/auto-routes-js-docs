@@ -1,6 +1,6 @@
 import routes from './routes.js';
 
-export const BASE_URL = window.location.origin + 'auto-routes-js-docs';
+export const BASE_URL = window.location.origin + '/auto-routes-js-docs';
 export const BASE_URL_IDENTIFIER = '$$BASE_URL';
 const updateBaseUrlInTemplate = templateStr => templateStr.replaceAll('$$BASE_URL', BASE_URL);
 const parsers = [
