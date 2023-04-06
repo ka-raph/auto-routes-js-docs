@@ -15,7 +15,7 @@ const Autoroutes = {
 }
 
 // Some methods must be immutable
-const readOnlyProperties = {
+const readOnlyProperties = { // TODORAF get appPath part that is not the origin
     addListeners,
     mountView,
     navigate,
@@ -132,7 +132,7 @@ async function mountView(route) {
 
 function navigate(route, data) {
     const fixedPath = route.charAt(0) === '/' ? route : '/' + route; // Allows to omit leading "/"
-    NAVIGATION_EVENT.path = fixedPath;
+    NAVIGATION_EVENT.path = Autoroutes.appPath.toString().replace(window.location.origin, '') + fixedPath;
 
     const fixedData = data !== undefined && data !== null ? data : Autoroutes.draftData;
     history.pushState(fixedData, '', fixedPath);
