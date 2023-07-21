@@ -1,4 +1,4 @@
-## Getting started
+# Getting started
 *Please note that the paths and folder structure in the examples below are only suggestions, you are free to use your own structure.*
 
 Create a file named `routes.js` in `/src/routes.js`from which you export an object containing routes such as below:
@@ -52,7 +52,7 @@ const settings = {
 Autoroutes.start({routes, ...settings});
 ```
 
-### NPM (no bundler)
+## NPM (no bundler)
 **Only if your backend can serve the `node_modules` folder or if serving routes can be configured.**
 
 If your server isn't serving the root folder of your frontend application but you can nonetheless configure it, add a route that serves the `node_modules` folder in your server.
@@ -63,7 +63,7 @@ import Autoroutes from '/path/to/node_modules/auto-routes-js/index.js';
 ```
 
 
-### NPM (with bundler)
+## NPM (with bundler)
 Add an import to the `auto-routes-js` module at the beginning of `/src/index.js` (make sure to fix the path) and for a cleaner code you can as well remove the `.js` extension from the other import, such as:
 ```javascript
 import Autoroutes from 'auto-routes-js';

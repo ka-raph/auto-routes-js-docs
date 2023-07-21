@@ -1,5 +1,5 @@
-## Install
-### CDN
+# Install
+## CDN
 
 In your main HTML file, say `/public/index.html`, add the CDN script before you main JavaScript file, such as:
 
@@ -20,7 +20,7 @@ In your main HTML file, say `/public/index.html`, add the CDN script before you 
 ```
 
 
-### NPM
+## NPM
 Run:
 ```
 npm install auto-routes-js
